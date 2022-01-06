@@ -1,7 +1,7 @@
 /*
 今日头条极速版
 IOS/安卓: 今日头条极速版
-邀请码： CYET6KHK
+邀请码： 1835475421
 老用户每天几毛，新用户可能收益高点
 普通版定时： 1-59/15 6-23 * * *
 激进版定时： 1-59/5 * * * *
@@ -14,17 +14,17 @@ IOS/安卓: 今日头条极速版
 ============Quantumultx===============
 [task_local]
 #今日头条极速版
-1-59/15 6-23 * * * https://github.com/JDWXX/ql_all/blob/master/qt/aqc/jrttjsb.js, tag=今日头条极速版, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
+1-59/15 6-23 * * * https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jrtt/jrttjsb.js, tag=今日头条极速版, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "1-59/15 6-23 * * *" script-path=https://github.com/JDWXX/ql_all/blob/master/qt/aqc/jrttjsb.js,tag=今日头条极速版
+cron "1-59/15 6-23 * * *" script-path=https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jrtt/jrttjsb.js,tag=今日头条极速版
 
 ===============Surge=================
-今日头条极速版 = type=cron,cronexp="1-59/15 6-23 * * *",wake-system=1,timeout=3600,script-path=https://github.com/JDWXX/ql_all/blob/master/qt/aqc/jrttjsb.js
+今日头条极速版 = type=cron,cronexp="1-59/15 6-23 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jrtt/jrttjsb.js
 
 ============小火箭=========
-今日头条极速版 = type=cron,script-path=https://github.com/JDWXX/ql_all/blob/master/qt/aqc/jrttjsb.js, cronexpr="1-59/15 6-23 * * *", timeout=3600, enable=true
+今日头条极速版 = type=cron,script-path=https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jrtt/jrttjsb.js, cronexpr="1-59/15 6-23 * * *", timeout=3600, enable=true
 */
 const $ = new Env('今日头条极速版');
 const notifyFlag = 1; //0为关闭通知，1为打开通知,默认为1
