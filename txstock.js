@@ -30,9 +30,20 @@ V2P：
 MITM: wzq.tenpay.com
 感谢原作者提供的脚本 https://raw.githubusercontent.com/leafxcy/JavaScript/main/txstock.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+============Quantumultx===============
+[task_local]
+#腾讯自选股
+35 11,16 * * * https://github.com/JDWXX/ql_all/blob/master/txzxg/txstock.js, tag=腾讯自选股, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxcfd.png, enabled=true
 
-cron "35 11,16 * * *" 
+================Loon==============
+[Script]
+cron "35 11,16 * * *" script-path=https://github.com/JDWXX/ql_all/blob/master/txzxg/txstock.js,tag=腾讯自选股
 
+===============Surge=================
+腾讯自选股 = type=cron,cronexp="35 11,16 * * *",wake-system=1,timeout=3600,script-path=https://github.com/JDWXX/ql_all/blob/master/txzxg/txstock.js
+
+============小火箭=========
+腾讯自选股 = type=cron,script-path=https://github.com/JDWXX/ql_all/blob/master/txzxg/txstock.js, cronexpr="35 11,16 * * *", timeout=3600, enable=true
 */
 const $ = new Env('腾讯自选股');
 const jsname = '腾讯自选股'
