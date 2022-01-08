@@ -10,8 +10,7 @@ Tg:https://t.me/Luobook666
 重写url:
 https://newvideo.autohome.com.cn/openapi/activity-api/switch/get_user_switch_info
 
-脚本：
-ql raw https://gitee.com/xiecoll/radish-script/raw/master/sl.js
+感谢原作者提供的脚本https://gitee.com/xiecoll/radish-script/raw/master/sl.js
 
 Cron :  5 0 * * *
 青龙设置slurl变量填完整url，多账号@隔开
