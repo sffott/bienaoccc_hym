@@ -22,7 +22,7 @@ https://yuekandian.yichengw.cn/api/v1/member/profile url script-request-header h
 hostname = yuekandian.yichengw.cn
 */
 
-const jsname = '看点宝'
+const jsname = '看点宝阅多多悦看点'
 const $ = new Env(jsname);
 const notifyFlag = 1; //0为关闭通知，1为打开通知,默认为1
 const logDebug = 0
