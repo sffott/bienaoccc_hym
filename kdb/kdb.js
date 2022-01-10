@@ -23,7 +23,7 @@ hostname = yuekandian.yichengw.cn
 */
 
 const jsname = '阅多多'
-const $ = Env(jsname)
+const $ = new Env(jsname);
 const notifyFlag = 1; //0为关闭通知，1为打开通知,默认为1
 const logDebug = 0
 
