@@ -15,17 +15,17 @@ export jkdck='{"Cookie":"xz_jkd_appkey=替换的CK"}'@'{"Cookie":"xz_jkd_appkey=
 ============Quantumultx===============
 [task_local]
 #聚看点
-0 0 2,5,8,11,14,17,20 * * * https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jkd/jd_wb_jkd.js, tag=聚看点, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
+0 0 2,5,8,11,14,17,20 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_master_jkd.js, tag=聚看点, img-url=https://raw.githubusercontent.com/Orz-3/task/master/jd.png, enabled=true
 
 ================Loon==============
 [Script]
-cron "0 0 2,5,8,11,14,17,20 * * *" script-path=https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jkd/jd_wb_jkd.js,tag=聚看点
+cron "0 0 2,5,8,11,14,17,20 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_master_jkd.js,tag=聚看点
 
 ===============Surge=================
-聚看点 = type=cron,cronexp="0 0 2,5,8,11,14,17,20 * * *",wake-system=1,timeout=33600,script-path=https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jkd/jd_wb_jkd.js
+聚看点 = type=cron,cronexp="0 0 2,5,8,11,14,17,20 * * *",wake-system=1,timeout=33600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_master_jkd.js
 
 ============小火箭=========
-聚看点 = type=cron,script-path=https://raw.githubusercontent.com/bienao666/bienaoccc_hym/main/jkd/jd_wb_jkd.js, cronexpr="0 0 2,5,8,11,14,17,20 * * *", timeout=33600, enable=true
+聚看点 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_master_jkd.js, cronexpr="0 0 2,5,8,11,14,17,20 * * *", timeout=33600, enable=true
 */
 const $ = new Env('聚看点');
 let status;
