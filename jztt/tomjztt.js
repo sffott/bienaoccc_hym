@@ -1,6 +1,11 @@
-const $ = new Env('tom九章1.11版 自动提0.3');
+/*
+抓包
+https://api.st615.com/v2/user/info?token=
 
-jztoken = ''
+*/
+const $ = new Env('九章头条');
+
+jztoken = $.isNode() ? (process.env.jzToken ? process.env.jzToken : "") : ($.getdata('jzToken') ? $.getdata('jzToken') : "")
 
 
 TOM = `https://tom666.coding.net/p/tom/d/tom/git/raw/master/csurl.json`
@@ -89,9 +94,9 @@ async function all() {
             if (data.data.ads_task[i].is_finish == 0) {
                 await ckck()
                 id = data.data.ads_task[i].id
-                await task(`post`, `https://api.st615.com/v1/task/ads`, headerss, `id=${id}&token=${jztoken}`),datas = DATA
-                if (datas.code == 0) {
-                    console.log(JSON.stringify(datas));
+                await task(`post`, `https://api.st615.com/v1/task/ads`, headerss, `id=${id}&token=${jztoken}`),data = DATA
+                if (data.code == 0) {
+                    console.log(JSON.stringify(data));
                 }
                 await $.wait(RT(30000, 36000))
             }
