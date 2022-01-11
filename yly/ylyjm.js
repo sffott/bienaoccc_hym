@@ -3,12 +3,6 @@ var navigator = {};
 
 /*! 
 JSEncrypt v2.3.0 | https://npmcdn.com/jsencrypt@2.3.0/LICENSE.txt 
-变量
-export ylyhd='user:token:app:XXXXXXXXXX'
-
-多账号@隔开
-
-抓token配合软件登录的
 */
 var RSA = {};
 (function (exports) {
