@@ -460,7 +460,7 @@ function findCookie(url) {
     cookie += aParams[i];
     cookie += '; '
   }
-  console.log(`哔哩哔哩 Cookie获取成功，cookie如下：\n\n${cookie}\n\n其它设置请前往GitHub查看\nhttps://github.com/he1pu`);
+  console.log(`哔哩哔哩 Cookie获取成功，cookie如下：\n\n${cookie}\n\n请去环境变量添加BILIBILI_COOKIE,值就是上方的cookie`);
   return cookie;
 
 }
