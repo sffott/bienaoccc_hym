@@ -1,7 +1,7 @@
 /*
 爱奇艺会员签到脚本
 
-更新时间: 2021.9.22
+更新时间: 2020.9.6
 脚本兼容: QuantumultX, Surge4, Loon, JsBox, Node.js
 电报频道: @NobyDa
 问题反馈: @NobyDa_bot
@@ -20,8 +20,6 @@ JsBox, Node.js用户抓取Cookie说明：
 
 var cookie = ''
 
-var barkKey = ''; //Bark APP 通知推送Key
-
 /*********************
 QuantumultX 远程脚本配置:
 **********************
@@ -33,7 +31,7 @@ QuantumultX 远程脚本配置:
 # 获取Cookie
 ^https?:\/\/iface(\d)?\.iqiyi\.com\/ url script-request-header https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
-[mitm] 
+[mitm]
 hostname= ifac*.iqiyi.com
 
 **********************
@@ -44,7 +42,7 @@ Surge 4.2.0+ 脚本配置:
 
 爱奇艺获取Cookie = type=http-request,pattern=^https?:\/\/iface(\d)?\.iqiyi\.com\/,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
-[MITM] 
+[MITM]
 hostname= ifac*.iqiyi.com
 
 ************************
@@ -58,14 +56,14 @@ cron "0 9 * * *" script-path=https://raw.githubusercontent.com/NobyDa/Script/mas
 # 获取Cookie
 http-request ^https?:\/\/iface(\d)?\.iqiyi\.com\/ script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js
 
-[Mitm] 
+[Mitm]
 hostname= ifac*.iqiyi.com
 
 */
 
 var LogDetails = false; // 响应日志
 
-var out = 0; // 超时 (毫秒) 如填写, 则不少于3000
+var out = 10000; // 超时 (毫秒) 如填写, 则不少于3000
 
 var $nobyda = nobyda();
 
@@ -120,14 +118,17 @@ function Checkin() {
         $nobyda.data = "签到失败: 接口请求出错 ‼️"
         console.log(`爱奇艺-${$nobyda.data} ${error}`)
       } else {
+        if(!isJSON_test(data)){
+          return false;
+        }
         const obj = JSON.parse(data)
         const Details = LogDetails ? `response:\n${data}` : ''
-        if (obj.msg == "成功") {
-          if (obj.data.signInfo.code == "A00000") {
+        if (obj.msg === "成功") {
+          if (obj.data.signInfo.code === "A00000") {
             var AwardName = obj.data.signInfo.data.rewards[0].name;
             var quantity = obj.data.signInfo.data.rewards[0].value;
-            var continued = obj.data.signInfo.data.cumulateSignDaysSum;
-            $nobyda.data = "签到成功: " + AwardName + quantity + ", 累计签到" + continued + "天 🎉"
+            var continued = obj.data.signInfo.data.continueSignDaysSum;
+            $nobyda.data = "签到成功: " + AwardName + quantity + ", 已连签" + continued + "天 🎉"
             console.log(`爱奇艺-${$nobyda.data} ${Details}`)
           } else {
             $nobyda.data = "签到失败: " + obj.data.signInfo.msg + " ⚠️"
@@ -160,13 +161,18 @@ function Lottery(s) {
           const obj = JSON.parse(data);
           const Details = LogDetails ? `response:\n${data}` : ''
           $nobyda.last = data.match(/(机会|已经)用完/) ? true : false
-          if (obj.awardName && obj.code == 0) {
+          if (obj.awardName && obj.code === 0) {
             $nobyda.data += !$nobyda.last ? `\n抽奖成功: ${obj.awardName.replace(/《.+》/, "未中奖")} 🎉` : `\n抽奖失败: 今日已抽奖 ⚠️`
             console.log(`爱奇艺-抽奖明细: ${obj.awardName.replace(/《.+》/, "未中奖")} 🎉 (${$nobyda.times}) ${Details}`)
           } else if (data.match(/\"errorReason\"/)) {
-            const msg = data.match(/msg=.+?\)/) ? data.match(/msg=(.+?)\)/)[1].replace(/用户(未登录|不存在)/, "Cookie无效") : ""
+            msg = data.match(/msg=.+?\)/) ? data.match(/msg=(.+?)\)/)[1].replace(/用户(未登录|不存在)/, "Cookie无效") : ""
             $nobyda.data += `\n抽奖失败: ${msg || `未知错误`} ⚠️`
             console.log(`爱奇艺-抽奖失败: ${msg || `未知错误`} ⚠️ (${$nobyda.times}) ${msg ? Details : `response:\n${data}`}`)
+            console.log(data)
+            s = s + 500;
+            if(s <= 4500){
+              await Lottery(s)
+            }
           } else {
             $nobyda.data += "\n抽奖错误: 已输出日志 ⚠️"
             console.log(`爱奇艺-抽奖失败: \n${data} (${$nobyda.times})`)
@@ -176,8 +182,7 @@ function Lottery(s) {
           await Lottery(s)
         } else {
           const expires = $nobyda.expire ? $nobyda.expire.replace(/\u5230\u671f/, "") : "获取失败 ⚠️"
-          if (!$nobyda.isNode) $nobyda.notify("爱奇艺", "到期时间: " + expires, $nobyda.data);
-          if (barkKey) await BarkNotify($nobyda, barkKey, '爱奇艺', `到期时间: ${expires}\n${$nobyda.data}`);
+          if (!$nobyda.isNode) $nobyda.notify("爱奇艺", "到期时间: " + expires, $nobyda.data)
         }
         resolve()
       })
@@ -192,7 +197,7 @@ function GetCookie() {
   var iQIYI = CKA || CKB || null
   var RA = $nobyda.read("CookieQY")
   if (iQIYI) {
-    if (RA != iQIYI[2]) {
+    if (RA !== iQIYI[2]) {
       var OldTime = $nobyda.read("CookieQYTime")
       if (!$nobyda.write(iQIYI[2], "CookieQY")) {
         $nobyda.notify(`${RA?`更新`:`首次写入`}爱奇艺签到Cookie失败‼️`, "", "")
@@ -211,8 +216,6 @@ function GetCookie() {
     console.log("\n爱奇艺-请求不含Cookie, 跳过写入 ‼️")
   }
 }
-
-async function BarkNotify(c,k,t,b){for(let i=0;i<3;i++){console.log(`🔷Bark notify >> Start push (${i+1})`);const s=await new Promise((n)=>{c.post({url:'https://api.day.app/push',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:t,body:b,device_key:k,ext_params:{group:t}})},(e,r,d)=>r&&r.status==200?n(1):n(d||e))});if(s===1){console.log('✅Push success!');break}else{console.log(`❌Push failed! >> ${s.message||s}`)}}}
 
 function nobyda() {
   const times = 0
@@ -293,42 +296,6 @@ function nobyda() {
       $http.get(options);
     }
   }
-  const post = (options, callback) => {
-    if (isQuanX) {
-      if (typeof options == "string") options = {
-        url: options
-      }
-      options["method"] = "POST"
-      $task.fetch(options).then(response => {
-        callback(null, adapterStatus(response), response.body)
-      }, reason => callback(reason.error, null, null))
-    }
-    if (isSurge) {
-      options.headers['X-Surge-Skip-Scripting'] = false
-      $httpClient.post(options, (error, response, body) => {
-        callback(error, adapterStatus(response), body)
-      })
-    }
-    if (isNode) {
-      node.request.post(options, (error, response, body) => {
-        callback(error, adapterStatus(response), body)
-      })
-    }
-    if (isJSBox) {
-      if (typeof options == "string") options = {
-        url: options
-      }
-      options["header"] = options["headers"]
-      options["handler"] = function(resp) {
-        let error = resp.error;
-        if (error) error = JSON.stringify(resp.error)
-        let body = resp.data;
-        if (typeof body == "object") body = JSON.stringify(resp.data)
-        callback(error, adapterStatus(resp.response), body)
-      }
-      $http.post(options);
-    }
-  }
 
   const log = (message) => console.log(message)
   const time = () => {
@@ -346,10 +313,24 @@ function nobyda() {
     write,
     read,
     get,
-    post,
     log,
     time,
     times,
     done
   }
 };
+
+function isJSON_test(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            //console.log('转换成功：'+obj);
+            return true;
+        } catch(e) {
+            console.log('no json');
+            console.log('error：'+str+'!!!'+e);
+            return false;
+        }
+    }
+    //console.log('It is not a string!')
+}
