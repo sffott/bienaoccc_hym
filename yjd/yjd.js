@@ -25,7 +25,7 @@ cron 21 15 * * *
  
 
  
-const $ = new Env('高佣金');
+const $ = new Env('佣金帝');
 let status;
 
 status = (status = ($.getval("gyjstatus") || "1")) > 1 ? `${status}` : "";
