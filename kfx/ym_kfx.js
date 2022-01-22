@@ -1,7 +1,7 @@
 /*
 活动地址微信打开 
 
-https://fscrm.kraftheinz.net.cn/?from=cb5nhXysp8lgbdsLcqs+ZQ==
+https://fscrm.kraftheinz.net.cn/?from=HjMsMV0Ze4Ciuet9MjDJ9A==
 
 变量设置 
 export crmtoken = 'XXXXXXXXXX' 抓取的token token抓取在登录后请求头 快捷搜索 getUserInfo
@@ -20,7 +20,6 @@ corn 1 0 * * * 一天一次即可 定时可以看他库存什么时候上新看�
 青龙拉取
 ql raw http://nm.nm6.ltd/scripts/krf.js
 
-
 */
 const $ = new Env('卡热敷');
 var request = require("request");
@@ -38,7 +37,8 @@ const logs =0;
 const host='https://fscrm.kraftheinz.net.cn/'
 var hours = new Date().getHours();
 var s = new Date().getMinutes();
-$.share = [];
+newShareCodes = [];
+let useInfo = {};
 var timestamp = Math.round(new Date().getTime()/1000).toString();
 !(async () => {
   if (typeof $request !== "undefined") {
@@ -99,29 +99,50 @@ await exchang()
 }
  }
       
+
   
+      
+    
+  
+  
+  
+//if ($.isNode() && allMessage) {
+     // await notify.sendNotify(`我你大爹`, `${allMessage}` )
+    //}   
+      
+  }
+ 
+  
+  
+ 
+  
+  
+    console.log(`\n开始账号内互助\n`);
+  for (let i = 0; i < crmhdArr.length; i++) {
+    crmtoken = crmhdArr[i];
+     $.UserName = crmtoken
+    
+    for (let j = 0; j < newShareCodes.length; j++) {
+if($.UserName === newShareCodes[j].usr){
+        continue;
+      }
+      console.log(`${$.UserName}去助力${newShareCodes[j].usr}`)
+      nick = useInfo[$.UserName];
+      await recordScoreShare(newShareCodes[j].code);
      
-    for (let i = 0; i < crmhdArr.length; i++) {
-   
-    if (crmhdArr[i]) {
-      crmtoken = crmhdArr[i];
-      
-      
-        if ($.share.length) console.log(`开始账号内部互助分享`)
-        for (let j = 0; j < $.share.length; ++j) {
-          console.log(`账号 ${nickname} 开始给 【${$.share[j]}】助力`)
-          await recordScoreShare($.share[j])
-
-        }
-      
-
     }
   }
-if ($.isNode() && allMessage) {
-      await notify.sendNotify(`我你大爹`, `${allMessage}` )
-    }   
-      
-  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
@@ -143,9 +164,12 @@ $.get(crmget('crm/public/index.php/api/v1/getUserInfo'), async (err, resp, data)
              score = data.data.memberInfo.score
              nickname = data.data.memberInfo.nickname
              userid = data.data.member_id
-             $.share.push(userid)
-             $.log($.share)
+            // $.share.push(userid)
+             //$.log($.share)
              crmphone = data.data.memberInfo.phone
+             
+          useInfo[$.UserName] = nickname;
+          newShareCodes.push({'usr':crmtoken, 'code':userid, 'max':false});
              console.log(`\n尊敬的叼毛：【${nickname}】 \n积分：【${score}】`)
               allMessage += `\n尊敬的叼毛：【${nickname}】 \n积分：【${score}】`
              }
@@ -255,7 +279,7 @@ async function recordScoreShare() {
     body = `cookbook_id=206&invite_id=${userid}`
 
 $.post(crmpost('crm/public/index.php/api/v1/recordScoreShare',body), async (err, resp, data) => {
-$.log(data)
+//$.log(data)
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
