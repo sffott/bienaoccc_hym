@@ -3,17 +3,23 @@
 
 https://fscrm.kraftheinz.net.cn/?from=cb5nhXysp8lgbdsLcqs+ZQ==
 
-变量设置
+变量设置 
 export crmtoken = 'XXXXXXXXXX' 抓取的token token抓取在登录后请求头 快捷搜索 getUserInfo
-export crmphone = 'XXXXXXXXXX' 你要兑换到的手机号码 如不填写 默认兑换到你登录完善信息的号码上
+export crmphone = '1383838438' 你要兑换到的手机号码 如不填写 默认兑换到你登录完善信息的号码上
 export crmtype = '20' 兑换金额 10为兑换10块的  20为兑换20的
-
+多账号@隔开
+export crmtoken = 'XXXXXXXXXX'@'XXXXXXXXXX'
 打开登录后去完善信息+30分 
+
+有生日积分可以设置当天的+20分
+
+发送不了验证码的叼毛 先点签到会弹窗
 
 corn 1 0 * * * 一天一次即可 定时可以看他库存什么时候上新看着改
 
 青龙拉取
 ql raw http://nm.nm6.ltd/scripts/krf.js
+
 
 */
 const $ = new Env('卡热敷');
@@ -80,16 +86,16 @@ await info()
 await sign()
 $.log(`\n【账号${$.index}开始兑换】`)
 allMessage += `\n【账号${$.index}开始兑换】`
-if(crmphone && crmtype == ''){
+if(crmphone  == ''){
  $.log(`\n账号${$.index}由于你个叼毛变量未设置兑换的号码和金额 \n将进行默认填写的号码兑换`)
  allMessage += `\n账号${$.index}由于你个叼毛变量未设置兑换的号码和金额 \n将进行默认填写的号码兑换`
   await exchang()  
 }else 
-if(crmphone && crmtype !== ''){
+
  $.log(`\n【账号${$.index}你个叼毛变量已设置 \n将进行变量的号码兑换】`)
  allMessage += `\n账号${$.index}由于你个叼毛变量未设置兑换的号码和金额 \n将进行默认填写的号码兑换`
+await exchang()
 
-}
 }
  }
       
