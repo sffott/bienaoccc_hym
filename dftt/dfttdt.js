@@ -33,8 +33,7 @@ let dfttua = process.env.dfttua;
 let dfttdtbd = process.env.dfttdtbd;
 
 //开始运行
-!(async () => {
-    console.log(`答题测试中,不可用也别找我;交流群:1001401060  by-yml`);
+!(async () => {   
     await yml()
 
 })()
