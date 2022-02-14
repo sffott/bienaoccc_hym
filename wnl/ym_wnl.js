@@ -7,8 +7,8 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 
 let httpResult //global buffer
 
-//let userCookie = ($.isNode() ? process.env.xxxxx : $.getdata('xxxxx')) || '';
-let userCookie = 'gudi账号数据放这里，多账户用@'
+let userCookie = $.isNode() ? (process.env.wnlguid ? process.env.wnlguid : "") : ($.getdata('wnlguid') ? $.getdata('wnlguid') : "");
+//let userCookie = 'gudi账号数据放这里，多账户用@'
 let userCookieArr = []
 let userList = []
 
