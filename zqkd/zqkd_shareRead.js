@@ -15,7 +15,7 @@ let notifyStr = ''
 let rndtime = "" //毫秒
 let httpResult //global buffer
 
-let zqkdCookie = ($.isNode() ? process.env.zq_cookie : $.getdata('zq_cookie')) || '';
+let zqkdCookie = ($.isNode() ? process.env.zqkdCookie : $.getdata('zqkdCookie')) || '';
 let zqkdCookieArr = []
 
 let userCk = ''
