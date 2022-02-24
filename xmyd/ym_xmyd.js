@@ -63,7 +63,7 @@ if ($.isNode()) {
     }
     step=$.getdata('XMYD_STEP')
     if(!step||step==''){
-        step = Math.ceil(Math.random() * 15000) + 9300;
+        step = Math.ceil(Math.random() * 15000) + 11300;
     }
     
 }
