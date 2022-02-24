@@ -47,7 +47,7 @@ if ($.isNode()) {
     };
     step=process.env.XMYD_STEP
     if(!step||step==''){
-        step = Math.ceil(Math.random() * 15000) + 9300;
+        step = Math.ceil(Math.random() * 15000) + 14659;
     }
     
 } else {
