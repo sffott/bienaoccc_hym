@@ -50,7 +50,7 @@ let test_taskList = []
 let todayDate = formatDateTime();
 let SCI_code = '000001' //上证指数
 let marketCode = {'sz':0, 'sh':1, 'hk':2, }
-let signType = {task:'welfare_sign', sign:'signdone', award:'award'}
+let signType = {task:'home', sign:'signdone', award:'award'}
 
 let taskList = {
     app: {
@@ -170,9 +170,16 @@ class UserInfo {
         } finally {}
     }
     
-    async signTask(actid,type,ticket='') {
+    async signTask(actid,action,ticket='') {
         try {
-            let url = `https://wzq.tenpay.com/cgi-bin/activity_sign_task.fcgi?actid=${actid}&channel=1&type=welfare_sign&action=home&date=${todayDate}&openid=${this.openid}&fskey=${this.fskey}&reward_ticket=${ticket}`
+            let url = `https://wzq.tenpay.com/cgi-bin/activity_sign_task.fcgi?actid=${actid}&channel=1&action=${action}&openid=${this.openid}&fskey=${this.fskey}`
+            if(action == signType.task) {
+                url += `&type=welfare_sign`
+            } else if(action == signType.sign) {
+                url += `&date=${todayDate}`
+            } else if (action == signType.award) {
+                url += `&reward_ticket=${ticket}`
+            }
             let body = ``
             let urlObject = populateUrlObject(url,this.cookie,body)
             await httpRequest('get',urlObject)
@@ -183,7 +190,8 @@ class UserInfo {
                 if(result.forbidden_code) {
                     console.log(`查询签到任务失败，可能已黑号: ${result.forbidden_reason}`)
                 } else {
-                    if(type == signType.task) {
+                    if(action == signType.task) {
+                        console.log(`已连续签到${result.task_pkg.continue_sign_days}天，总签到天数${result.task_pkg.total_sign_days}天`)
                         for(let item of result.task_pkg.tasks) {
                             if(item.date == todayDate){
                                 if(item.status == 0){
@@ -200,9 +208,9 @@ class UserInfo {
                             await $.wait(TASK_WAITTIME);
                             await this.signTask(actid,signType.award,result.lotto_ticket);
                         }
-                    } else if(type == signType.sign) {
+                    } else if(action == signType.sign) {
                         console.log(`签到获得${result.reward_desc}`);
-                    } else if(type == signType.sign) {
+                    } else if(action == signType.award) {
                         console.log(`领取连续签到奖励获得${result.reward_desc}`);
                     }
                 }
@@ -875,10 +883,10 @@ class UserInfo {
             if(result.retcode==0) {
                 if(type == 'newbie') {
                     this.shareCodes.newbie[share_type] = result.share_code
-                    console.log(`获取到新手任务[${share_type}]互助码：${result.share_code}`)
+                    console.log(`获取新手任务[${share_type}]互助码：${result.share_code}`)
                 } else {
                     this.shareCodes.task[share_type] = result.share_code
-                    console.log(`获取到日常任务[${share_type}]互助码：${result.share_code}`)
+                    console.log(`获取日常任务[${share_type}]互助码：${result.share_code}`)
                 }
             } else {
                 console.log(`获取[${share_type}]互助码失败：${result.retmsg}`);
