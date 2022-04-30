@@ -16,11 +16,11 @@ let parActivityId="Gh1tkq-wvFU2xEP_ZPzHPQ"
 let wm_ctype="mtandroid"
 let propIdforuse =2
 let portraitId=498
-let mt_token = process.env.MT_TOKEN;
+let mt_token = process.env.mtTk;
 let wm_latitude = process.env.wm_latitude;
 let wm_longitude = process.env.wm_longitude;
 if (!mt_token) {
-    console.log('请先添加美团Token,环境变量MT_TOKEN')
+    console.log('请先添加美团Token,环境变量mtTk')
     return
 }
 
