@@ -1,25 +1,18 @@
 import random #:1
 import requests #:2
+import os
 from loguru import logger #:3
 '''
-频道链接:https://t.me/maomaoalal  交流群:https://t.me/+5xDWXXg-Ug03ZGI1
-鸾凤玉华 小程序
-抓包 api.luanfengyuhua.cn 域名
-变量：sessionkey  
-签到10天大概20缘值 价值20块钱
-也可以兑换实物
-corn 一天一次
+
 '''
 # 账号配置
-sessionkey_list =['sessionkey']# 多账号配置 ['session1','session2']
+#sessionkey_list =['pn2VokAY0C6TFphel7FFEw==']# 多账号配置 ['session1','session2']
+sessionkey_list =[]
+if "sessionkey" in os.environ:
+    if len(os.environ["sessionkey"]) > 1:
+        sessionkey_list = os.environ["sessionkey"].split('@')
 info ='''
-频道链接:https://t.me/maomaoalal  交流群:https://t.me/+5xDWXXg-Ug03ZGI1
-鸾凤玉华 小程序账号配置
-抓包 api.luanfengyuhua.cn 域名
-变量：sessionkey  
-签到10天大概20缘值 价值20块钱
-也可以兑换实物
-corn 一天一次
+
 '''#:25
 def get_ua ():#:26
     OOO0OO0O00000OOOO =random .randint (55 ,62 )#:27
