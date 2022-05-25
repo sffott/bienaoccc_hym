@@ -6,7 +6,6 @@ from loguru import logger #:3
 
 '''
 # 账号配置
-#sessionkey_list =['pn2VokAY0C6TFphel7FFEw==']# 多账号配置 ['session1','session2']
 sessionkey_list =[]
 if "sessionkey" in os.environ:
     if len(os.environ["sessionkey"]) > 1:
