@@ -102,14 +102,14 @@ async function signIn() {
     let result = await httpGet(url, `领红包`);
 
     if (result.status === "SUCCEED") {
-        console.log(`   领红包: 本次获得 ${result.data.allPrize} 元, 累计获得${result.data.todayPrize} 元`);
-        msg += `   领红包: 本次获得 ${result.data.allPrize} 元, 累计获得${result.data.todayPrize} 元`;
+        console.log(`\n   领红包: 本次获得 ${result.data.todayPrize} 元, 累计获得${result.data.allPrize} 元`);
+        msg += `\n   领红包: 本次获得 ${result.data.todayPrize} 元, 累计获得${result.data.allPrize} 元`;
     } else if (result.status === "FAILED") {
-        console.log(`   领红包: ${result.errorMessage}`);
-        msg += `   领红包: ${result.errorMessage}`;
+        console.log(`\n   领红包: ${result.errorMessage}`);
+        msg += `\n   领红包: ${result.errorMessage}`;
     } else {
-        console.log(`   领红包: 失败 ❌ 了呢,原因未知！  ${result} \n`);
-        msg += `    领红包: 失败 ❌ 了呢,原因未知！  \n `;
+        console.log(`\n   领红包: 失败 ❌ 了呢,原因未知！  ${result} \n`);
+        msg += `\n    领红包: 失败 ❌ 了呢,原因未知！  \n `;
     }
 }
 
@@ -133,27 +133,27 @@ async function getCks(ck, str) {
 
     return new Promise((resolve) => {
 
-        let ckArr = []
-        if (ck) {
-            if (ck.indexOf("@") !== -1) {
+            let ckArr = []
+            if (ck) {
+                if (ck.indexOf("@") !== -1) {
 
-                ck.split("@").forEach((item) => {
-                    ckArr.push(item);
-                });
-            } else if (ck.indexOf("\n") !== -1) {
+                    ck.split("@").forEach((item) => {
+                        ckArr.push(item);
+                    });
+                } else if (ck.indexOf("\n") !== -1) {
 
-                ck.split("\n").forEach((item) => {
-                    ckArr.push(item);
-                });
+                    ck.split("\n").forEach((item) => {
+                        ckArr.push(item);
+                    });
+                } else {
+                    ckArr.push(ck);
+                }
+                resolve(ckArr)
             } else {
-                ckArr.push(ck);
+                console.log(`\n 【${$.name}】：未填写变量 ${str}`)
             }
-            resolve(ckArr)
-        } else {
-            console.log(`\n 【${$.name}】：未填写变量 ${str}`)
-        }
 
-    }
+        }
     )
 }
 
@@ -241,16 +241,16 @@ function wyy(timeout = 3 * 1000) {
             url: `https://keai.icu/apiwyy/api`
         }
         $.get(url, async (err, resp, data) => {
-            try {
-                data = JSON.parse(data)
-                console.log(`\n 【网抑云时间】: ${data.content}  by--${data.music}`);
+                try {
+                    data = JSON.parse(data)
+                    console.log(`\n 【网抑云时间】: ${data.content}  by--${data.music}`);
 
-            } catch (e) {
-                $.logErr(e, resp);
-            } finally {
-                resolve()
-            }
-        }, timeout
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve()
+                }
+            }, timeout
         )
     })
 }
