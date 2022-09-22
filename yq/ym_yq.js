@@ -1,14 +1,12 @@
-/*
-羊了个羊群 资金盘 不要投资
-
-(抓header里面的unionid和token的值)
-
-格式  unionid#token
-例如  oEgG85#123456
-
-ck填到yqCookie里，多账号 换行 或者@隔开
-*/
-
+/**
+ * 羊了个羊群 资金盘 不要投资
+ *
+ * cron 0 9 * * *
+ * (抓header里面的unionid和token的值)
+ * 格式  unionid#token
+ * 例如  oEgG85#123456
+ * ck填到yqCookie里，多账号 换行 或者@隔开
+ */
 const $ = new Env( "羊群" );
 let envSplitor = [ "@", "\n" ],
     httpResult, httpReq, httpResp, ckName = "yqCookie",
